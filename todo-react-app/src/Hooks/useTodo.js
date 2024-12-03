@@ -1,16 +1,14 @@
-import { data } from "autoprefixer";
-import React from "react";
 import { useReducer } from "react";
 
 const reducer = (state, action) => {
-  if (action.state == "add") {
+  if (action.state === "add") {
     return [
       ...state,
-      { id: crypto.randomUUID(), title: data, ischecked: false },
+      { id: crypto.randomUUID(), title:action.data, ischecked: false },
     ];
   }
-  if (action.state == "delete") {
-    return state?.filter((item) => item.id !== data.id);
+  if (action.state === "delete") {
+    return state?.filter((item) => item.id !== action.data);
   }
   return state;
 };

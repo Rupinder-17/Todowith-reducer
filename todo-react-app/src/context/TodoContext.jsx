@@ -1,19 +1,29 @@
-import { useTodo } from '@/Hooks/useTodo'
-import React from 'react'
-import { createContext } from 'react'
+import { useTodo } from "@/Hooks/useTodo";
+// import React from "react";
+import { createContext } from "react";
 
- export const TodoProvider = createContext()
+ export const TodoContext = createContext();
 
-export const TodoContext = ({children}) => {
-const [state, addTodo, deleteTodo] = useTodo()
+export const TodoProvider = ({ children }) => {
+  const [state, addTodo, deleteTodo] = useTodo();
+  console.log("state", state);
+  
+  const handleAdd = (title)=>{
+    addTodo(title)
+  }
+  const handleDelete = (id)=>{
+    deleteTodo(id)
+  }
 
-const todoDisplay = {
+  const todoDisplay = {
     state,
-    addTodo,
-    deleteTodo
-}
+    handleAdd,
+    handleDelete,
+  };
 
   return (
-    <TodoProvider.Provider value={todoDisplay}>{children}</TodoProvider.Provider>
-  )
-}
+    <TodoContext.Provider value={todoDisplay}>
+      {children}
+    </TodoContext.Provider>
+  );
+};
