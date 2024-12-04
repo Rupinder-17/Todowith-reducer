@@ -23,6 +23,10 @@ const reducer = (state, action) => {
 
     return updatedState;
   }
+  if(action.type === "restore"){
+    return state?.map((item)=> item.id === action.data ?{...item, isDeleted: false}: item)
+  }
+
   return state;
 };
 
@@ -40,5 +44,11 @@ export const useTodo = () => {
 
     dispatch({ type: "delete", data: id });
   };
-  return [state, addTodo, deleteTodo];
+  const restoreTodo = (item) => {
+    dispatch({ type: "restore", data: item });
+  };
+  return [state, addTodo, deleteTodo, restoreTodo];
 };
+
+
+

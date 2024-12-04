@@ -5,13 +5,16 @@ import { createContext } from "react";
 export const TodoContext = createContext();
 
 export const TodoProvider = ({ children }) => {
-  const [state, addTodo, deleteTodo] = useTodo();
+  const [state, addTodo, deleteTodo, restoreTodo] = useTodo();
   console.log("state", state);
 
   const todos = state.filter((elem) => !elem.isDeleted);
   // console.log("elm",FilterItems);
-  const deletedTodos = state.filter((item)=> item.isDeleted)
-  
+  const deletedTodos = state.filter((item) => item.isDeleted);
+
+  const handleRestoreTodos = (item) => {
+    restoreTodo(item);
+  };
 
   const handleAdd = (title) => {
     addTodo(title);
@@ -26,6 +29,7 @@ export const TodoProvider = ({ children }) => {
     deletedTodos,
     handleAdd,
     handleDelete,
+    handleRestoreTodos,
   };
 
   return (

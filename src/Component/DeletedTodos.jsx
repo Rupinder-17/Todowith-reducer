@@ -1,7 +1,7 @@
 import { useTodocontext } from "@/Hooks/useTodocontext";
 
 export const DeletedTodos = () => {
-  const {deletedTodos } = useTodocontext();
+  const {deletedTodos, handleRestoreTodos } = useTodocontext();
 
 
   return (
@@ -15,12 +15,12 @@ export const DeletedTodos = () => {
             className="flex justify-between items-center p-3 bg-white rounded-md shadow-md"
           >
             <p className="text-gray-700">{item?.title}</p>
-            {/* <button
-              onClick={() => handleDelete(item.id)}
+            <button
+            onClick={()=> handleRestoreTodos(item.id)}
               className="text-red-500 hover:text-red-700 font-semibold"
             >
-              Delete
-            </button> */}
+              Restore
+            </button>
           </li>
         ))}
       </ul>
