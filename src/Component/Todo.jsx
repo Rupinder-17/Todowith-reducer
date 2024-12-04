@@ -3,9 +3,7 @@ import { useState } from "react";
 
 export const Todo = () => {
   const [inputValue, setInput] = useState("");
-  const { state, handleAdd, handleDelete } = useTodocontext();
-  console.log(state);
-  console.log("in", inputValue);
+  const { todos, handleAdd, handleDelete } = useTodocontext();
 
   const handleChange = (e) => {
     setInput(e.target.value);
@@ -36,7 +34,7 @@ export const Todo = () => {
         </button>
       </div>
       <ul className="space-y-3">
-        {state?.map((item) => (
+        {todos?.map((item) => (
           <li
             key={item.id}
             className="flex justify-between items-center p-3 bg-white rounded-md shadow-md"
