@@ -5,7 +5,7 @@ import { createContext } from "react";
 export const TodoContext = createContext();
 
 export const TodoProvider = ({ children }) => {
-  const [state, addTodo, deleteTodo, restoreTodo] = useTodo();
+  const [state, addTodo, deleteTodo, restoreTodo, permanentDelete] = useTodo();
   console.log("state", state);
 
   const todos = state.filter((elem) => !elem.isDeleted);
@@ -22,14 +22,19 @@ export const TodoProvider = ({ children }) => {
   const handleDelete = (id) => {
     deleteTodo(id);
   };
+  const handlePermanentDeleteTodo = (item)=>{
+    permanentDelete(item)
+  }
 
   const todoDisplay = {
-    count: state.length,
+    count: todos.length,
+    deleteCount: deletedTodos.length,
     todos,
     deletedTodos,
     handleAdd,
     handleDelete,
     handleRestoreTodos,
+    handlePermanentDeleteTodo,
   };
 
   return (

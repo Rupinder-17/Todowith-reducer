@@ -1,3 +1,4 @@
+import { parse } from "postcss";
 import { useReducer } from "react";
 
 const reducer = (state, action) => {
@@ -26,13 +27,16 @@ const reducer = (state, action) => {
   if(action.type === "restore"){
     return state?.map((item)=> item.id === action.data ?{...item, isDeleted: false}: item)
   }
-
-  return state;
+  if (action.type === "permanentDeleteTodo") {
+    return state?.filter((item)=> item.id !== action.data)
+  }
+    return state;
 };
 
-const initialstate = [];
+const initialstate = JSON.parse(localStorage.getItem("todos")) || []
 export const useTodo = () => {
   const [state, dispatch] = useReducer(reducer, initialstate);
+  localStorage.setItem("todos", JSON.stringify(state))
 
   const addTodo = (item) => {
     console.log("item", item);
@@ -47,7 +51,12 @@ export const useTodo = () => {
   const restoreTodo = (item) => {
     dispatch({ type: "restore", data: item });
   };
-  return [state, addTodo, deleteTodo, restoreTodo];
+  const permanentDelete = (item)=>{
+    console.log("perm", item);
+    
+    dispatch({type: "permanentDeleteTodo", data: item})
+  }
+  return [state, addTodo, deleteTodo, restoreTodo, permanentDelete];
 };
 
 
